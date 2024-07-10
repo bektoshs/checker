@@ -145,17 +145,44 @@ from opentelemetry.exporter.jaeger.thrift import JaegerExporter
 
 if os.getenv("ENABLE_OTEL", "False") == "True":
     from opentelemetry import trace
+    from opentelemetry.sdk.resources import Resource
     from opentelemetry.sdk.trace import TracerProvider
     from opentelemetry.sdk.trace.export import BatchSpanProcessor
     from opentelemetry.exporter.jaeger.thrift import JaegerExporter
 
-    trace.set_tracer_provider(TracerProvider())
-    tracer = trace.get_tracer(__name__)
+    # Checking site get or create service
+    check_website_resource = Resource(attributes={
+        "service.name": "check_website_service"
+    })
 
-    jaeger_exporter = JaegerExporter(
+    check_website_provider = TracerProvider(resource=check_website_resource)
+    trace.set_tracer_provider(check_website_provider)
+    check_website_tracer = trace.get_tracer("check_website_tracer")
+
+    check_website_exporter = JaegerExporter(
         agent_host_name='localhost',
         agent_port=6831,
     )
 
-    span_processor = BatchSpanProcessor(jaeger_exporter)
-    trace.get_tracer_provider().add_span_processor(span_processor)
+    check_website_span_processor = BatchSpanProcessor(check_website_exporter)
+    check_website_provider.add_span_processor(check_website_span_processor)
+
+    # List website service
+    list_website_resource = Resource(attributes={
+        "service.name": "list_website_service"
+    })
+
+    list_website_provider = TracerProvider(resource=list_website_resource)
+    trace.set_tracer_provider(list_website_provider)
+    list_website_tracer = trace.get_tracer("list_website_tracer")
+
+    list_website_exporter = JaegerExporter(
+        agent_host_name='localhost',
+        agent_port=6831,
+    )
+
+    list_website_span_processor = BatchSpanProcessor(list_website_exporter)
+    list_website_provider.add_span_processor(list_website_span_processor)
+else:
+    check_website_tracer = None
+    list_website_tracer = None
