@@ -1,5 +1,21 @@
 version: '3.7'
 services:
+  web:
+    build: .
+    image: webapp
+    command: gunicorn website_status.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+      - ./static:/static
   jaeger:
     image: jaegertracing/all-in-one:1.22
     ports:
