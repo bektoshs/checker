@@ -1,16 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.http import HttpResponseNotFound
+from django.conf.urls import handler404
+from checker.views import custom_404_view
 
-admin.autodiscover()
+handler404 = custom_404_view
 
 urlpatterns = [
     path('secret-admin/', admin.site.urls),
     path('secret-checker/', include('checker.urls')),
 ]
-
-
-def custom_page_not_found(request, exception=None):
-    return HttpResponseNotFound('Page not found')
-
-handler404 = 'websites_url.urls.custom_page_not_found'

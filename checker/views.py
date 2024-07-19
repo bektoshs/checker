@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from opentelemetry import trace
+from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -55,3 +56,12 @@ class WebsiteListView(APIView):
             websites = Website.objects.all()
             serializer = WebsiteSerializer(websites, many=True)
             return Response(serializer.data)
+
+
+def custom_404_view(request, exception):
+    context = {
+        'error_message': "Not Found",
+        'error_code': 404,
+        'home_url': '/',
+    }
+    return render(request, '404.html', context, status=404)

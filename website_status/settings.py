@@ -15,7 +15,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-yq71ac#o2-$vwt-#60h(z&q_h241zid2_6aww!$^jnon+*ucx^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['trust-api.asakabank.uz', '172.16.53.77', '127.0.0.1', 'localhost']
 CSRF_TRUSTED_ORIGINS = ['http://trust-api.asakabank.uz', 'http://172.16.53.77:8080']
@@ -77,6 +77,8 @@ WSGI_APPLICATION = 'website_status.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+# Prod
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -87,6 +89,18 @@ DATABASES = {
         'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
+
+# Local
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'checker',
+#         'USER': 'postgres',
+#         'PASSWORD': '0525',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
