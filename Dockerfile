@@ -9,6 +9,7 @@ WORKDIR /website_status
 
 # Install dependencies
 COPY requirements.txt /website_status/
+RUN apt-get update && apt-get install -y build-essential libpq-dev python3-dev
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
