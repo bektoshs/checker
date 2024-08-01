@@ -15,16 +15,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-yq71ac#o2-$vwt-#60h(z&q_h241zid2_6aww!$^jnon+*ucx^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-#DEBUG = True
+#DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = ['*']
 #ALLOWED_HOSTS = ['trust-api.asakabank.uz', '172.16.53.77', '127.0.0.1', 'localhost', '192.168.84.47']
 
+
+
 CSRF_TRUSTED_ORIGINS = [
-    'http://trust-api.asakabank.uz',
-    'http://172.16.53.77:8080',
+    'https://trust-api.asakabank.uz',
+    'https://172.16.53.77:8080',
     'https://89.249.63.66:8080',
 ]
 
@@ -105,28 +107,28 @@ WSGI_APPLICATION = 'website_status.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 # Prod
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('POSTGRES_DB'),
-#         'USER': os.getenv('POSTGRES_USER'),
-#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-#         'HOST': os.getenv('POSTGRES_HOST', 'db'),
-#         'PORT': os.getenv('POSTGRES_PORT', '5432'),
-#     }
-# }
+DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql',
+         'NAME': os.getenv('POSTGRES_DB'),
+         'USER': os.getenv('POSTGRES_USER'),
+         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+         'HOST': os.getenv('POSTGRES_HOST', 'db'),
+         'PORT': os.getenv('POSTGRES_PORT', '5432'),
+     }
+}
 
 # Local
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'checker',
-        'USER': 'postgres',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'databse_real',
+#        'USER': 'postgres',
+#        'PASSWORD': '0525',
+#        'HOST': 'db',
+#        'PORT': '5432',
+#    }
+#}
 
 
 # Password validation
