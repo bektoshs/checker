@@ -27,6 +27,7 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     'https://trust-api.asakabank.uz',
     'https://172.16.53.77:8080',
+    'http://172.16.53.77:8080',
     'https://89.249.63.66:8080',
 ]
 
@@ -110,10 +111,10 @@ WSGI_APPLICATION = 'website_status.wsgi.application'
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.postgresql',
-         'NAME': os.getenv('POSTGRES_DB'),
-         'USER': os.getenv('POSTGRES_USER'),
-         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-         'HOST': os.getenv('POSTGRES_HOST', 'db'),
+         'NAME': os.getenv('POSTGRES_DB', 'checker'),
+         'USER': os.getenv('POSTGRES_USER', 'bektosh'),
+         'PASSWORD': os.getenv('POSTGRES_PASSWORD', '0525'),
+         'HOST': os.getenv('POSTGRES_HOST', '127.0.0.1'),
          'PORT': os.getenv('POSTGRES_PORT', '5432'),
      }
 }
