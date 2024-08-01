@@ -4,7 +4,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.formats.base_formats import XLSX
 from import_export.admin import ImportExportMixin
-from .models import Website
+from .models import Website, WebsiteWithIndex
 import re
 
 
@@ -41,3 +41,4 @@ class WebsiteAdmin(ImportExportMixin, admin.ModelAdmin):
 
 
 admin.site.register(Website, WebsiteAdmin)
+admin.site.register(WebsiteWithIndex)

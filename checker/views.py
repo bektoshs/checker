@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
-from .models import Website
+from .models import Website, WebsiteWithIndex
 from .serializers import WebsiteSerializer
 
 tracer = trace.get_tracer(__name__)
@@ -45,6 +45,43 @@ def check_website(request):
             return JsonResponse({'address': website.address, 'status': website.status})
 
         return JsonResponse({"xato": "Noto'g'ri so'rov usuli"}, status=400)
+
+
+@csrf_exempt
+def check_website_version2(request):
+
+    if request.method == 'POST':
+        address = request.POST.get('address')
+        status = request.POST.get('status')
+
+        if not address:
+            return JsonResponse({'xato': 'Manzil kerak'}, status=400)
+
+        print(f"Kiritilgan address: {address}")
+        print(f"Kiritilgan status: {status}")
+
+        website, created = WebsiteWithIndex.objects.get_or_create(address=address)
+
+        if created:
+            if status:
+                website.status = status
+            elif ((address.endswith('.asakabank.uz') or address.endswith('.askb.uz')) or
+                  (address == 'asakabank.uz' or address == 'askb.uz')):
+                website.status = 'original'
+            elif ((address.startswith('asakabank.') and address.endswith('.uz')) or
+                  (address.startswith('askb.') and address.endswith('.uz'))):
+                website.status = 'fake'
+            else:
+                website.status = 'not_checked'
+            website.save()
+        else:
+            if status:
+                website.status = status
+                website.save()
+
+        return JsonResponse({'address': website.address, 'status': website.status})
+
+    return JsonResponse({"xato": "Noto'g'ri so'rov usuli"}, status=400)
 
 
 class WebsiteListView(APIView):
