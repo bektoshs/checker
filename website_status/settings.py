@@ -22,29 +22,30 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 #ALLOWED_HOSTS = ['trust-api.asakabank.uz', '172.16.53.77', '127.0.0.1', 'localhost', '192.168.84.47']
 
-ADMIN_ALLOWED_IPS = ['89.249.63.66']
 
-
-def get_client_ip(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
-
-
-class AdminIPRestrictionMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        if request.path.startswith('/secret-admin/'):
-            client_ip = get_client_ip(request)
-            if client_ip not in ADMIN_ALLOWED_IPS:
-                return HttpResponseForbidden('Sizga admin panelga kirish ruxsat etilmagan.')
-        response = self.get_response(request)
-        return response
+# ADMIN_ALLOWED_IPS = ['89.249.63.66']
+#
+#
+# def get_client_ip(request):
+#     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+#     if x_forwarded_for:
+#         ip = x_forwarded_for.split(',')[0]
+#     else:
+#         ip = request.META.get('REMOTE_ADDR')
+#     return ip
+#
+#
+# class AdminIPRestrictionMiddleware:
+#     def __init__(self, get_response):
+#         self.get_response = get_response
+#
+#     def __call__(self, request):
+#         if request.path.startswith('/secret-admin/'):
+#             client_ip = get_client_ip(request)
+#             if client_ip not in ADMIN_ALLOWED_IPS:
+#                 return HttpResponseForbidden('Sizga admin panelga kirish ruxsat etilmagan.')
+#         response = self.get_response(request)
+#         return response
 
 
 CSRF_TRUSTED_ORIGINS = [
@@ -78,7 +79,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'checker.middleware.AdminIPRestrictionMiddleware'
+    # 'checker.middleware.AdminIPRestrictionMiddleware'
 ]
 
 
