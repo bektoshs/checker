@@ -16,6 +16,6 @@ class AdminAccessControlMiddleware(MiddlewareMixin):
 
 
 urlpatterns = [
-    path('secret-admin/', admin.site.urls),
+    path('secret-vkjdsfsovsdklndsicslkdnscnslncsdncksnclksdn/', admin.site.urls),
     path('secret-checker/', include('checker.urls')),
 ]
