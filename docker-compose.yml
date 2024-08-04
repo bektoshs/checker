@@ -13,6 +13,7 @@ services:
     depends_on:
       - db
     environment:
+      - DOCKER_TLS_VERIFY=0
       - POSTGRES_DB=your_db_name
       - POSTGRES_USER=your_db_user
       - POSTGRES_PASSWORD=your_db_password
